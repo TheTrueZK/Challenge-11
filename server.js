@@ -3,7 +3,6 @@ const express = require("express");
 const fs = require("fs");
 const database = require("./db/db.json");
 const app = express();
-const path = require('path');
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
@@ -38,6 +37,7 @@ app.post('/api/notes', (req, res) => {
     const newNote = createNote(req.body, database);
     res.json(newNote);
 });
+
 
 app.listen(PORT, () => {
     console.log(`server now on port ${PORT}!`)
