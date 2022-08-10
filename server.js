@@ -3,6 +3,7 @@ const express = require("express");
 const fs = require("fs");
 const database = require("./db/db.json");
 const app = express();
+const path = require('path');
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
