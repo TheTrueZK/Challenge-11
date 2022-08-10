@@ -25,6 +25,12 @@ function createNote(body, notesArray) {
     if (!Array.isArray(notesArray))
         notesArray = [];
 
+    if (notesArray.length === 0)
+        notesArray.push(0);
+
+    body.id = notesArray[0];
+    notesArray[0]++;
+
     notesArray.push(newNote);
     fs.writeFileSync(
         path.join(__dirname, './db/db.json'),
@@ -32,6 +38,11 @@ function createNote(body, notesArray) {
     );
     return newNote;
 }
+
+app.post('/api/notes', (req, res) => {
+    const newNote = createNote(req.body, database);
+    res.json(newNote);
+});
 
 app.listen(PORT, () => {
     console.log(`server now on port ${PORT}!`)
