@@ -2,7 +2,6 @@ const express = require("express");
 const fs = require("fs");
 const database = require("./db/db.json");
 const app = express();
-const index = require("./public/assets/js/index.js");
 
 const PORT = process.env.PORT || 3001;
 
