@@ -37,6 +37,7 @@ const saveNote = (note) =>
   fetch('/api/notes', {
     method: 'POST',
     headers: {
+      accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(note),
@@ -109,6 +110,8 @@ const handleNewNoteView = (e) => {
 };
 
 const handleRenderSaveBtn = () => {
+  console.log(noteTitle.value.trim())
+  console.log(noteText.value.trim())
   if (!noteTitle.value.trim() || !noteText.value.trim()) {
     hide(saveNoteBtn);
   } else {

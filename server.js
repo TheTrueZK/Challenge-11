@@ -1,7 +1,8 @@
 const express = require("express");
 const fs = require("fs");
-const database = require("./db/db.json");
+const {notes} = require("./db/db.json");
 const app = express();
+const router = require("express").Router();
 
 const PORT = process.env.PORT || 3001;
 
@@ -9,12 +10,25 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
-app.get ('/notes', (req, res) => {
+router.get ('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, './public/notes.html'));
+})
+
+app.get ('/api/notes', (req, res) => {
+    const results = notes
+    res.json(results)
+    // fs.readFile(__dirname + '/db/db.json', 'utf8',(err, data) => {
+    //     if (err) {
+    //         console.log(err)
+    //         res.sendStatus(404)
+    //         return 
+    //     }
+    //     return res.json(data)
+    // })
 })
 
 function createNote(body, notesArray) {
@@ -31,7 +45,7 @@ function createNote(body, notesArray) {
 }
 
 app.post('/api/notes', (req, res) => {
-    const newNote = createNote(req.body, database);
+    const newNote = createNote(req.body, notes);
     res.json(newNote);
 });
 
