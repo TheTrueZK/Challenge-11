@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const {notes} = require("./db/db.json");
 const app = express();
-const router = require("express").Router();
+const path = require("path");
 
 const PORT = process.env.PORT || 3001;
 
@@ -10,11 +10,11 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static('public'));
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
-router.get ('/notes', (req, res) => {
+app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, './public/notes.html'));
 })
 
