@@ -1,6 +1,6 @@
 const express = require("express");
 const fs = require("fs");
-const {notes} = require("./db/db.json");
+const notes = require("./db/db.json");
 const app = express();
 const path = require("path");
 
@@ -21,20 +21,25 @@ app.get('/notes', (req, res) => {
 app.get ('/api/notes', (req, res) => {
     const results = notes
     res.json(results)
-    // fs.readFile(__dirname + '/db/db.json', 'utf8',(err, data) => {
-    //     if (err) {
-    //         console.log(err)
-    //         res.sendStatus(404)
-    //         return 
-    //     }
-    //     return res.json(data)
-    // })
+    fs.readFile(__dirname + '/db/db.json', 'utf8',(err, data) => {
+        if (err) {
+            console.log(err)
+            res.sendStatus(404)
+            return 
+        }
+    })
 })
 
 function createNote(body, notesArray) {
     const newNote = body;
     if (!Array.isArray(notesArray))
         notesArray = [];
+    
+    if (notesArray.length === 0)
+        notesArray.push(0);
+
+    body.id = notesArray[0];
+    notesArray[0]++;
 
     notesArray.push(newNote);
     fs.writeFileSync(
